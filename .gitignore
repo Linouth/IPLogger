@@ -1,4 +1,4 @@
-app/logger.db
-app/uploads/
+app/__pycache__/
 
 venv/
+instance/

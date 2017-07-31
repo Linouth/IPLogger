@@ -15,12 +15,15 @@ from peewee import (
 from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
 
 
+app = Flask(__name__)
+
+
 ADMIN_PASSWORD = 'Panasonic'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
-DATABASE = 'sqlite:///{}'.format(os.path.join(APP_DIR, 'logger.db'))
+DATABASE = 'sqlite:///{}'.format(os.path.join(app.instance_path, 'logger.db'))
 DEBUG = False
 SECRET_KEY = 'Secret_Key_Logger'
-UPLOAD_DIR = os.path.join(APP_DIR, 'uploads/')
+UPLOAD_DIR = os.path.join(app.instance_path, 'uploads/')
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 SITE_NAME = 'Imges'
 
@@ -28,7 +31,6 @@ IMG_ID_LEN = 8
 DELETE_ID_LEN = 12
 
 
-app = Flask(__name__)
 app.config.from_object(__name__)
 
 flask_db = FlaskDB(app)
