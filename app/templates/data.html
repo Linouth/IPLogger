@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Image Data{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="thumbnail">
+                <img class="img-responsive" src="{{ url_for('image_raw', img_id=entry.img_id, t='No') }}" alt="{{ entry.img_id }}" />
+                <div class="caption text-center">{{ entry.keyword }}</div>
+                <div class="caption text-center">ID: {{ entry.img_id }}</div>
+            </div>
+            <br />
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">Urls</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="full">Detailed:</label>
+                        <input type=text class="form-control" id="full" value="{{ request.url_root + entry.img_id }}" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label for="full">Raw:</label>
+                        <input type=text class="form-control" id="full" value="{{ request.url_root + entry.img_id }}/raw" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label for="full">Raw no tracking:</label>
+                        <input type=text class="form-control" id="full" value="{{ request.url_root + entry.img_id }}/raw?t=No" readonly/>
+                    </div>
+                    <div class="form-group">
+                        <label for="full">Delete:</label>
+                        <input type=text class="form-control" id="full" value="{{ request.url_root + 'delete/' + entry.delete_id }}" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">Stats</div>
+                <div class="panel-body">
+                    <p><b>Views:</b> {{ entry.visitors|length }}</p>
+                    <p><b>Unique:</b> {{ entry.visitors|map(attribute='ip')|list|unique|length }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <table class="table table-data">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>IP Address</th>
+                        <th>User Agent</th>
+                        <th>Headers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for visitor in entry.visitors|sort(attribute='timestamp', reverse=True) %}
+                    <tr>
+                        <td>{{ visitor.timestamp.strftime('%H:%M %d/%m/%Y') }}</td>
+                        <td>{{ visitor.ip }}</td>
+                        <td>{{ visitor.headers['User-Agent'] }}</td>
+                        <td><button type="button" class="btn btn-primary collapse-btn" data-id="H-{{ visitor.id }}">Show</button></td>
+                    </tr>
+                    <tr>
+                        <td colspan=16 class="collapse" id="H-{{ visitor.id }}">
+                            <table class="table table-condensed table-bordered table-striped table-headers">
+                                <thead>
+                                    <tr>
+                                        <th>Key</th>
+                                        <th>Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for k, v in visitor.headers.items() %}
+                                    <tr>
+                                        <td>{{ k }}</td>
+                                        <td>{{ v }}</td>
+                                    </tr>
+                                    {% endfor %}
+                            </table>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

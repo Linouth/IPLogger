@@ -1,0 +1,4 @@
+app/logger.db
+app/uploads/
+
+venv/

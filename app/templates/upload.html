@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Image{% endblock %}
+
+{% block content %}
+    <form id="upload" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+        <div class="input-group">
+            <span class="input-group-addon">Keyword*</span>
+            <input type="text" class="form-control" name="keyword">
+        </div>
+        <div class="input-group">
+            <label class="input-group-btn">
+                <span class="btn btn-default">
+                    Browse&hellip; <input type="file" class="file" name="file" hidden>
+                </span>
+            </label>
+            <input type="text" class="form-control" readonly>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Upload</button>
+    </form>
+{% endblock %}

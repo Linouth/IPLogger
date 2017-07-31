@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>Thumbnail</th>
+                <th>Timestamp</th>
+                <th>Keyword</th>
+                <th>ID</th>
+                <th>Visitors</th>
+                <th>Unique</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr class="clickable-row" data-href="{{ url_for('data', img_id=entry.img_id) }}">
+                <td><img src="{{ url_for('image_raw', img_id=entry.img_id, t='No') }}" /></td>
+                <td>{{ entry.timestamp.strftime('%H:%M %d/%m/%Y') }}</td>
+                <td>{{ entry.keyword }}</td>
+                <td>{{ entry.img_id }}</td>
+                <td>{{ entry.visitors|length }}</td>
+                <td>{{ entry.visitors|map(attribute='ip')|list|unique|length }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+{% endblock %}

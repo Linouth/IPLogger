@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <form class="form-signin" method="POST">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="hidden" name="next" value="{{ next_url }}">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

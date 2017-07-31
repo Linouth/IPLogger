@@ -1,0 +1,58 @@
+/*
+body
+    color white
+    background-color #333
+    text-shadow 0 1px 3px rgba(0, 0, 0, 0.5)
+*/
+[hidden] {
+  display: none !important;
+}
+td.collapse.in {
+  display: table-cell !important;
+}
+table.table-headers {
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+table.table-headers th:first-child {
+  width: 190px;
+}
+table.table-data th:nth-of-type(1),
+table.table-data td:nth-of-type(1) {
+  width: 11%;
+}
+table.table-data th:nth-of-type(2),
+table.table-data td:nth-of-type(2) {
+  width: 11%;
+}
+table.table-data th:nth-of-type(4),
+table.table-data td:nth-of-type(4) {
+  width: 9%;
+}
+tr.clickable-row {
+  cursor: pointer;
+  transition-duration: 0.1s;
+}
+tr.clickable-row:nth-of-type(even):hover {
+  background: #f7f7f7;
+}
+tr.clickable-row:nth-of-type(odd):hover {
+  background: #f2f2f2;
+}
+tr.clickable-row img {
+  width: 100px;
+}
+tr.clickable-row td {
+  vertical-align: middle !important;
+}
+form#upload div.input-group:first-child {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+form#upload div.input-group:last-child {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+form#upload button['submit'] {
+  margin: 20px 0px;
+}

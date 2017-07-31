@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}{% if self.title() %} | {% endif %}{{ config['SITE_NAME'] }}</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <meta name=robots" content="noindex">
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/image.css') }}" />
+        <!-- <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}" /> -->
+
+        <script src="{{ url_for('static', filename='js/jquery-3.2.1.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    </head>
+
+    <body>
+        {% if session.logged_in %}
+            <div class="navbar navbar-default navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="{{ url_for('index') }}">{{ config['SITE_NAME'] }}</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav pull-right">
+                            <li><a href="{{ url_for('upload') }}">Create</a></li>
+                            <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+        <div class="container">
+            {% for category, message in get_flashed_messages(with_categories=true) %}
+                <div class="alert alert-{{ category }} alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p>{{ message }}</p>
+                </div>
+            {% endfor %}
+
+            {#
+            {% block page_header %}
+                <div class="page-header">
+                    <h1>{% block content_title %}{% endblock %}</h1>
+                </div>
+            {% endblock %}
+            #}
+
+
+            {% block content %}{% endblock %}
+
+            
+            <!-- <footer> -->
+            <!--     <p>Image, &copy; 2017</p> -->
+            <!-- </footer> -->
+
+            <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+        </div>
+    </body>
+</html>
+
