@@ -12,7 +12,7 @@ from flask import (
 from peewee import (
         CharField, DateTimeField, TextField, ForeignKeyField
 )
-from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
+from playhouse.flask_utils import FlaskDB, get_object_or_404
 
 
 app = Flask(__name__)
@@ -94,7 +94,7 @@ class Image(flask_db.Model):
         image = Image.create(
                 img_id=Image.gen_id('img'),
                 delete_id=Image.gen_id('delete',
-                                         length=app.config['DELETE_ID_LEN']),
+                                       length=app.config['DELETE_ID_LEN']),
                 ext=ext)
 
         filename = '{}.{}'.format(image.img_id, image.ext)
@@ -109,8 +109,10 @@ class Image(flask_db.Model):
         filename = '{}.{}'.format(image.img_id, image.ext)
         os.remove(os.path.join(app.config['UPLOAD_DIR'], filename))
 
-        image.delete_instance()
+        for visitor in image.visitors:
+            visitor.delete_instance()
 
+        image.delete_instance()
 
 
 class Visitor(flask_db.Model):
@@ -218,7 +220,8 @@ def image_raw(img_id):
     t = request.args.get('t')
     if t != 'No':
         print('Added visitor.')
-        Visitor.create(image=entry, ip=request.remote_addr, headers=dict(request.headers))
+        Visitor.create(image=entry, ip=request.remote_addr,
+                       headers=dict(request.headers))
     return entry.raw()
 
 
